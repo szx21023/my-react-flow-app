@@ -12,13 +12,25 @@ const initialNodes = [
     id: 'node-1',
     type: 'myNode',
     position: { x: 0, y: 0 },
-    data: { name: 'test' },
+    data: { 
+      row: [
+        { field: 'name', value: 'Alice' },
+        { field: 'age', value: '25' },
+        { field: 'job', value: 'Engineer' }
+      ]
+    },
   },
   {
     id: 'node-2',
     type: 'myNode',
-    position: { x: 0, y: 100 },
-    data: { name: 'test2' },
+    position: { x: 0, y: 0 },
+    data: { 
+      row: [
+        { field: 'name', value: 'Herry' },
+        { field: 'age', value: '30' },
+        { field: 'job', value: 'PM' }
+      ]
+    },
   },
 ];
 
