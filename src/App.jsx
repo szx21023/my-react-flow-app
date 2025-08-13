@@ -13,10 +13,11 @@ const initialNodes = [
     type: 'myNode',
     position: { x: 0, y: 0 },
     data: { 
+      name: 'user',
       row: [
-        { field: 'name', value: 'Alice' },
-        { field: 'age', value: '25' },
-        { field: 'job', value: 'Engineer' }
+        { field: 'name', type: 'string', value: 'Alice' },
+        { field: 'age', type: 'integer', value: '25' },
+        { field: 'job', type: 'string', value: 'Engineer' }
       ]
     },
   },
@@ -25,10 +26,11 @@ const initialNodes = [
     type: 'myNode',
     position: { x: 0, y: 0 },
     data: { 
+      name: 'customer',
       row: [
-        { field: 'name', value: 'Herry' },
-        { field: 'age', value: '30' },
-        { field: 'job', value: 'PM' }
+        { field: 'name', type: 'string', value: 'Herry' },
+        { field: 'age', type: 'integer', value: '30' },
+        { field: 'job', type: 'string', value: 'PM' }
       ]
     },
   },
