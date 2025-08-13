@@ -10,8 +10,9 @@ export default function MyNode({ data }) {
     <div
       style={{
         border: '2px solid red',   // ✅ 顯示邊界
+        color: '#000',
         borderRadius: '8px',
-        backgroundColor: 'white',
+        backgroundColor: 'darkgray',
         minWidth: '150px',
         textAlign: 'center',
         padding: '4px'
