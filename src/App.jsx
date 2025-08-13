@@ -1,6 +1,9 @@
 import { useEffect } from 'react';
 import { ReactFlow } from '@xyflow/react';
-import { useNodesState } from '@xyflow/react';
+import {
+  useNodesState,
+  Background,
+} from '@xyflow/react';
 import '@xyflow/react/dist/style.css';
 import MyNode from './MyNode';
 
@@ -31,7 +34,9 @@ export default function App() {
         onNodesChange={onNodesChange}
         nodeTypes={nodeTypes}
         fitView
-      />
+      >
+        <Background />
+      </ReactFlow>
     </div>
   );
 }
