@@ -1,48 +1,33 @@
+import { useEffect } from 'react';
 import { ReactFlow } from '@xyflow/react';
-import '@xyflow/react/dist/style.css';
 import { useNodesState } from '@xyflow/react';
+import '@xyflow/react/dist/style.css';
 import MyNode from './MyNode';
 
 const nodeTypes = {
   myNode: MyNode,
 };
 
-const initialNodes = [
-  {
-    id: 'node-1',
-    type: 'myNode',
-    position: { x: 0, y: 0 },
-    data: { 
-      name: 'user',
-      row: [
-        { field: 'name', type: 'string', value: 'Alice' },
-        { field: 'age', type: 'integer', value: '25' },
-        { field: 'job', type: 'string', value: 'Engineer' }
-      ]
-    },
-  },
-  {
-    id: 'node-2',
-    type: 'myNode',
-    position: { x: 0, y: 0 },
-    data: { 
-      name: 'customer',
-      row: [
-        { field: 'name', type: 'string', value: 'Herry' },
-        { field: 'age', type: 'integer', value: '30' },
-        { field: 'job', type: 'string', value: 'PM' }
-      ]
-    },
-  },
-];
-
 export default function App() {
-  const [nodes, setNodes, onNodesChange] = useNodesState(initialNodes);
+  const [nodes, setNodes, onNodesChange] = useNodesState([]);
+
+  // ✅ API 載入節點資料
+  useEffect(() => {
+    fetch('http://127.0.0.1:8000/ir')
+      .then((res) => res.json())
+      .then((data) => {
+        // 假設後端傳來的是符合 xyflow 格式的 nodes 陣列
+        setNodes(data);
+      })
+      .catch((err) => {
+        console.error('載入節點失敗:', err);
+      });
+  }, []);
 
   return (
     <div style={{ width: '100vw', height: '100vh' }}>
       <ReactFlow
-        nodes={nodes} // ✅ 用這個 state
+        nodes={nodes}
         onNodesChange={onNodesChange}
         nodeTypes={nodeTypes}
         fitView
