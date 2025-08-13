@@ -18,7 +18,9 @@ export default function MyNode({ data }) {
       }}
     >
       <Handle type="target" position={Position.Top} />
-
+      <div>
+        {data.name}
+      </div>
       <table
         style={{
           borderCollapse: 'collapse',
@@ -28,7 +30,8 @@ export default function MyNode({ data }) {
         <thead>
           <tr>
             <th style={{ border: '1px solid black', padding: '4px' }}>欄位</th>
-            <th style={{ border: '1px solid black', padding: '4px' }}>值</th>
+            <th style={{ border: '1px solid black', padding: '4px' }}>型態</th>
+            <th style={{ border: '1px solid black', padding: '4px' }}>範例</th>
           </tr>
         </thead>
         <tbody>
@@ -36,6 +39,9 @@ export default function MyNode({ data }) {
             <tr key={index}>
               <td style={{ border: '1px solid black', padding: '4px' }}>
                 {row.field}
+              </td>
+              <td style={{ border: '1px solid black', padding: '4px' }}>
+                {row.type}
               </td>
               <td style={{ border: '1px solid black', padding: '4px' }}>
                 {row.value}
