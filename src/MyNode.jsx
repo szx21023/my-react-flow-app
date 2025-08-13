@@ -29,9 +29,9 @@ export default function MyNode({ data }) {
       >
         <thead>
           <tr>
-            <th style={{ border: '1px solid black', padding: '4px' }}>欄位</th>
-            <th style={{ border: '1px solid black', padding: '4px' }}>型態</th>
-            <th style={{ border: '1px solid black', padding: '4px' }}>範例</th>
+            <th style={{ border: '1px solid black', padding: '4px', backgroundColor: 'gray' }}>column</th>
+            <th style={{ border: '1px solid black', padding: '4px', backgroundColor: 'gray' }}>type</th>
+            <th style={{ border: '1px solid black', padding: '4px', backgroundColor: 'gray' }}>example</th>
           </tr>
         </thead>
         <tbody>
