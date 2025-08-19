@@ -21,6 +21,9 @@ export default function MyNode({ data }) {
       <div>
         {data.name}
       </div>
+      <div>
+        <b>description:</b> {data.description}
+      </div>
       <table
         style={{
           borderCollapse: 'collapse',
@@ -31,7 +34,7 @@ export default function MyNode({ data }) {
           <tr>
             <th style={{ border: '1px solid black', padding: '4px', backgroundColor: 'gray' }}>column</th>
             <th style={{ border: '1px solid black', padding: '4px', backgroundColor: 'gray' }}>type</th>
-            <th style={{ border: '1px solid black', padding: '4px', backgroundColor: 'gray' }}>example</th>
+            <th style={{ border: '1px solid black', padding: '4px', backgroundColor: 'gray' }}>nullable</th>
           </tr>
         </thead>
         <tbody>
