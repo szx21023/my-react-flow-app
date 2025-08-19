@@ -2,7 +2,6 @@ import React from 'react';
 import { Handle, Position } from '@xyflow/react';
 
 export default function MyNode({ data }) {
-  console.log(data);
   const rows = Array.isArray(data?.rows) ? data.rows
              : Array.isArray(data?.row)  ? data.row
              : [];
@@ -22,6 +21,9 @@ export default function MyNode({ data }) {
       <div>
         {data.name}
       </div>
+      <div>
+        <b>description:</b> {data.description}
+      </div>
       <table
         style={{
           borderCollapse: 'collapse',
@@ -32,20 +34,20 @@ export default function MyNode({ data }) {
           <tr>
             <th style={{ border: '1px solid black', padding: '4px', backgroundColor: 'gray' }}>column</th>
             <th style={{ border: '1px solid black', padding: '4px', backgroundColor: 'gray' }}>type</th>
-            <th style={{ border: '1px solid black', padding: '4px', backgroundColor: 'gray' }}>example</th>
+            <th style={{ border: '1px solid black', padding: '4px', backgroundColor: 'gray' }}>nullable</th>
           </tr>
         </thead>
         <tbody>
           {rows?.map((row, index) => (
             <tr key={index}>
               <td style={{ border: '1px solid black', padding: '4px' }}>
-                {row.field}
+                {row.name}
               </td>
               <td style={{ border: '1px solid black', padding: '4px' }}>
                 {row.type}
               </td>
               <td style={{ border: '1px solid black', padding: '4px' }}>
-                {row.value}
+                {String(row.nullable)}
               </td>
             </tr>
           ))}
