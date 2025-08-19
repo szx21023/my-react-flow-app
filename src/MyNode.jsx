@@ -2,7 +2,6 @@ import React from 'react';
 import { Handle, Position } from '@xyflow/react';
 
 export default function MyNode({ data }) {
-  console.log(data);
   const rows = Array.isArray(data?.rows) ? data.rows
              : Array.isArray(data?.row)  ? data.row
              : [];
@@ -39,13 +38,13 @@ export default function MyNode({ data }) {
           {rows?.map((row, index) => (
             <tr key={index}>
               <td style={{ border: '1px solid black', padding: '4px' }}>
-                {row.field}
+                {row.name}
               </td>
               <td style={{ border: '1px solid black', padding: '4px' }}>
                 {row.type}
               </td>
               <td style={{ border: '1px solid black', padding: '4px' }}>
-                {row.value}
+                {String(row.nullable)}
               </td>
             </tr>
           ))}

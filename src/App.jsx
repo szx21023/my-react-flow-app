@@ -16,11 +16,21 @@ export default function App() {
 
   // ✅ API 載入節點資料
   useEffect(() => {
-    fetch('http://127.0.0.1:8000/ir')
+    fetch('http://127.0.0.1:8000/tables')
       .then((res) => res.json())
       .then((data) => {
-        // 假設後端傳來的是符合 xyflow 格式的 nodes 陣列
-        setNodes(data);
+        const formattedNodes = data.map((node, index) => ({
+        id: node.id?.toString() || `node-${index}`,
+        type: 'myNode',
+        position: node.position || { x: index * 100, y: 100 },
+        data: {
+          name: node.name,
+          description: node.description,
+          rows: node.columns || [], // 對應 MyNode.jsx 中的 rows
+        },
+        }));
+
+        setNodes(formattedNodes);
       })
       .catch((err) => {
         console.error('載入節點失敗:', err);
