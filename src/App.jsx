@@ -5,10 +5,10 @@ import {
   Background,
 } from '@xyflow/react';
 import '@xyflow/react/dist/style.css';
-import MyNode from './MyNode';
+import TableNode from './TableNode';
 
 const nodeTypes = {
-  myNode: MyNode,
+  tableNode: TableNode,
 };
 
 export default function App() {
@@ -21,12 +21,12 @@ export default function App() {
       .then((data) => {
         const formattedNodes = data.map((node, index) => ({
         id: node.id?.toString() || `node-${index}`,
-        type: 'myNode',
+        type: 'tableNode',
         position: node.position || { x: index * 100, y: 100 },
         data: {
           name: node.name,
           description: node.description,
-          rows: node.columns || [], // 對應 MyNode.jsx 中的 rows
+          rows: node.columns || [], // 對應 TableNode.jsx 中的 rows
         },
         }));
 

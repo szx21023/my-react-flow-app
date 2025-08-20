@@ -1,7 +1,7 @@
 import React from 'react';
 import { Handle, Position } from '@xyflow/react';
 
-export default function MyNode({ data }) {
+export default function TableNode({ data }) {
   const rows = Array.isArray(data?.rows) ? data.rows
              : Array.isArray(data?.row)  ? data.row
              : [];
