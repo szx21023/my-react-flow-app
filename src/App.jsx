@@ -1,76 +1,48 @@
-import { useEffect } from 'react';
-import { ReactFlow } from '@xyflow/react';
+import React, { useEffect } from 'react';
 import {
-  useNodesState,
-  Background,
+  ReactFlow, Background, Controls, MiniMap,
+  useNodesState, useEdgesState,
 } from '@xyflow/react';
 import '@xyflow/react/dist/style.css';
-import ApiNode from './ApiNode';
 import TableNode from './TableNode';
+import ApiNode from './ApiNode';
+import { irToFlow } from './irToFlow';
 
-const nodeTypes = {
-  apiNode: ApiNode,
-  tableNode: TableNode,
-};
+const nodeTypes = { table: TableNode, api: ApiNode };
 
 export default function App() {
   const [nodes, setNodes, onNodesChange] = useNodesState([]);
-
-  // ✅ API 載入節點資料
-  // useEffect(() => {
-  //   fetch('http://127.0.0.1:8000/tables')
-  //     .then((res) => res.json())
-  //     .then((data) => {
-  //       const formattedNodes = data.map((node, index) => ({
-  //       id: node.id?.toString() || `node-${index}`,
-  //       type: 'tableNode',
-  //       position: node.position || { x: index * 100, y: 100 },
-  //       data: {
-  //         name: node.name,
-  //         description: node.description,
-  //         rows: node.columns || [], // 對應 TableNode.jsx 中的 rows
-  //       },
-  //       }));
-
-  //       setNodes(formattedNodes);
-  //     })
-  //     .catch((err) => {
-  //       console.error('載入節點失敗:', err);
-  //     });
-  // }, []);
+  const [edges, setEdges, onEdgesChange] = useEdgesState([]);
 
   useEffect(() => {
-    fetch('http://127.0.0.1:8000/apis')
-      .then((res) => res.json())
-      .then((data) => {
-        const formattedNodes = data.map((node, index) => ({
-        id: node.id?.toString() || `node-${index}`,
-        type: 'apiNode',
-        position: node.position || { x: index * 100, y: 100 },
-        data: {
-          method: node.method,
-          path: node.path,
-          request_fields: node.request_fields || [], // 對應 TableNode.jsx 中的 rows
-          response_fields: node.response_fields || [], // 假設有 response_fields
-        },
-        }));
-
-        setNodes(formattedNodes);
+    fetch('http://127.0.0.1:8000/ir')
+      .then(r => r.json())
+      .then(ir => {
+        const { nodes, edges } = irToFlow(ir);
+        setNodes(nodes);
+        setEdges(edges);
       })
-      .catch((err) => {
-        console.error('載入節點失敗:', err);
-      });
+      .catch(err => console.error('載入 IR 失敗', err));
   }, []);
 
   return (
     <div style={{ width: '100vw', height: '100vh' }}>
       <ReactFlow
         nodes={nodes}
+        edges={edges}
         onNodesChange={onNodesChange}
+        onEdgesChange={onEdgesChange}
         nodeTypes={nodeTypes}
         fitView
       >
-        <Background />
+        <Background variant="dots" gap={16} size={1} />
+        <Controls showInteractive />
+        <MiniMap
+          zoomable pannable
+          nodeColor={(n) => (n.type === 'api' ? '#a7f3d0' : '#bfdbfe')}
+          nodeStrokeWidth={2}
+          style={{ width: 180, height: 120 }}
+        />
       </ReactFlow>
     </div>
   );
