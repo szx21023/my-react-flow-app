@@ -12,6 +12,18 @@ import { usePromptChat } from './hooks/usePromptChat';
 
 const nodeTypes = { table: TableNode, api: ApiNode };
 
+// 放在檔案上方
+const apiFill = (m = '') => {
+  switch (String(m).toUpperCase()) {
+    case 'GET': return '#86efac';     // 綠（淺）
+    case 'POST': return '#93c5fd';    // 藍
+    case 'PUT':
+    case 'PATCH': return '#fdba74';   // 橘
+    case 'DELETE': return '#fca5a5';  // 紅
+    default: return '#e5e7eb';        // 灰
+  }
+};
+
 export default function App() {
   const [nodes, setNodes, onNodesChange] = useNodesState([]);
   const [edges, setEdges, onEdgesChange] = useEdgesState([]);
@@ -46,7 +58,11 @@ export default function App() {
       >
         <Background variant="dots" gap={16} size={1} />
         <Controls showInteractive />
-        <MiniMap zoomable pannable />
+        <MiniMap
+          zoomable pannable
+          nodeColor={(n) => n.type === 'api' ? apiFill(n.data?.method) : '#bfdbfe'}
+          nodeStrokeWidth={2}
+        />
         <Panel position="bottom-right">
           <button
             onClick={chat.openDialog}
