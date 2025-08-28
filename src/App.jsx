@@ -59,9 +59,11 @@ export default function App() {
         <Background variant="dots" gap={16} size={1} />
         <Controls showInteractive />
         <MiniMap
-          zoomable pannable
-          nodeColor={(n) => n.type === 'api' ? apiFill(n.data?.method) : '#bfdbfe'}
+          zoomable
+          pannable
+          nodeColor={(n) => (n.type === 'api' ? apiFill(n.data?.method) : '#bfdbfe')}
           nodeStrokeWidth={2}
+          style={{ width: 180, height: 120, left: 16, bottom: 16, right: 'auto', top: 'auto' }}
         />
         <Panel position="bottom-right">
           <button
