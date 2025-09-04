@@ -12,7 +12,7 @@ export function usePromptChat({ base = 'http://127.0.0.1:8000', onApplied, defau
 
   const normalizeMessage = (p) => ({
     id: p.id,
-    role: 'user',
+    role: p.role,
     content: typeof p.prompt === 'string' ? { text: p.prompt } : p.content ?? { text: '' },
     created_at: p.created_at,
   });
