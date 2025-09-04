@@ -28,7 +28,7 @@ export default function PromptDialog({
       <div key={m.id ?? i} style={{ display:'flex', justifyContent: isUser ? 'flex-end' : 'flex-start', margin: '6px 0' }}>
         <div style={{
           maxWidth: '80%', whiteSpace:'pre-wrap', wordBreak:'break-word',
-          background: isUser ? '#111827' : '#fff', color: isUser ? '#fff' : '#000',
+          background: isUser ? '#111827' : '#111827', color: isUser ? '#fff' : '#fff',
           border: '1px solid #e5e7eb', borderRadius: 10, padding: 8, fontSize: 12,
         }}>
           <div style={{ fontSize:10, opacity:.6, marginBottom:4 }}>
