@@ -117,3 +117,58 @@ button:focus-visible {
   background: #111827; color: #fff; border: none; cursor: pointer; font-size: 20px;
   box-shadow: 0 10px 24px rgba(0,0,0,0.2);
 }
+
+
+/* ===== SpecGenie App Shell ===== */
+.sg-app { display: flex; min-height: 100vh; }
+.sg-main { flex: 1; position: relative; padding: 12px; }
+
+.sg-sidebar {
+  width: 220px;
+  background: #111827;
+  color: #e5e7eb;
+  border-right: 1px solid #374151;
+  display: flex; flex-direction: column;
+  position: sticky; top: 0; align-self: flex-start; height: 100vh;
+}
+.sg-sidebar.collapsed { width: 64px; }
+
+.sg-sidebar__top {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 12px; border-bottom: 1px solid #1f2937;
+}
+.sg-brand { font-weight: 700; display: flex; align-items: center; gap: 8px; }
+.sg-brand__dot { width: 8px; height: 8px; border-radius: 50%; background: #10b981; display:inline-block; }
+
+.sg-iconbtn {
+  border: 1px solid #374151; background: #111827; color: #e5e7eb;
+  border-radius: 8px; padding: 4px 8px; cursor: pointer;
+}
+.sg-iconbtn:hover { background: #1f2937; }
+
+.sg-nav { padding: 8px; display: flex; flex-direction: column; gap: 4px; }
+.sg-nav__item {
+  display: flex; align-items: center; gap: 10px;
+  background: transparent; color: #e5e7eb; border: 1px solid transparent;
+  border-radius: 10px; padding: 10px 12px; cursor: pointer; text-align: left;
+}
+.sg-nav__item:hover { background: #1f2937; border-color: #374151; }
+
+.sg-nav__icon { width: 20px; display: inline-flex; justify-content: center; }
+.sg-sidebar.collapsed .sg-nav__text { display: none; }
+
+.sg-sidebar__foot { margin-top: auto; padding: 12px; border-top: 1px solid #1f2937; }
+.sg-tip { font-size: 12px; color: #9ca3af; }
+
+/* Adjust ReactFlow container to fill main panel */
+.sg-main .react-flow { height: calc(100vh - 24px); background: #111827; border: 1px solid #374151; border-radius: 12px; }
+.react-flow__panel { z-index: 5; }
+
+/* Position minimap bottom-left nicely */
+.react-flow__minimap { left: 8px !important; right: auto !important; bottom: 8px !important; top: auto !important; }
+
+
+/* ---- Sidebar robustness fixes ---- */
+.sg-sidebar { flex: 0 0 220px; position: sticky; top: 0; z-index: 20; }
+.sg-sidebar.collapsed { flex: 0 0 64px; }
+.sg-main { flex: 1; min-width: 0; position: relative; z-index: 1; }

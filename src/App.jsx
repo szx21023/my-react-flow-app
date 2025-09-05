@@ -8,6 +8,7 @@ import TableNode from './TableNode';
 import ApiNode from './ApiNode';
 import { irToFlow } from './irToFlow';
 import PromptDialog from './components/PromptDialog';
+import Sidebar from './components/Sidebar';
 import { usePromptChat } from './hooks/usePromptChat';
 
 const nodeTypes = { table: TableNode, api: ApiNode };
@@ -46,7 +47,10 @@ export default function App() {
   });
 
   return (
-    <div style={{ width: '100vw', height: '100vh' }}>
+    <div className="sg-app">
+      <Sidebar onSelect={(key)=>console.log('sidebar select:', key)} />
+      <main className="sg-main">
+        <div style={{ width: '100vw', height: '100vh' }}>
       <ReactFlow
         nodes={nodes}
         edges={edges}
@@ -78,6 +82,8 @@ export default function App() {
 
       {/* ✅ 展示型元件，從 Hook 拿 props */}
       <PromptDialog {...chat.dialogProps} />
+    </div>
+      </main>
     </div>
   );
 }
