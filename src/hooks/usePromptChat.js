@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useState, useMemo } from 'react';
 
-export function usePromptChat({ base = 'http://127.0.0.1:8000', onApplied, defaultMode = 'spec' } = {}) {
+export function usePromptChat({ base, onApplied, defaultMode = 'spec' } = {}) {
   const [open, setOpen] = useState(false);
   const [busy, setBusy] = useState(false);
   const [text, setText] = useState('');

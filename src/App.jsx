@@ -12,6 +12,7 @@ import Sidebar from './components/Sidebar';
 import { usePromptChat } from './hooks/usePromptChat';
 
 const nodeTypes = { table: TableNode, api: ApiNode };
+const API_BASE = import.meta.env.VITE_API_BASE ?? 'http://127.0.0.1:8000';
 
 // 放在檔案上方
 const apiFill = (m = '') => {
@@ -31,7 +32,7 @@ export default function App() {
   const rfRef = useRef(null);
 
   const loadIR = async () => {
-    const ir = await fetch('http://127.0.0.1:8000/ir').then(r => r.json());
+    const ir = await fetch(`${API_BASE}/ir`).then(r => r.json());
     const { nodes, edges } = irToFlow(ir);
     setNodes(nodes);
     setEdges(edges);
@@ -42,7 +43,7 @@ export default function App() {
 
   // ✅ 把對話窗邏輯全交給 Hook
   const chat = usePromptChat({
-    base: 'http://127.0.0.1:8000', // 如果有 Vite 代理可改成 '/api'
+    base: API_BASE,
     onApplied: loadIR,
   });
 
