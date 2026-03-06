@@ -70,19 +70,30 @@ export default function App() {
           nodeStrokeWidth={2}
           style={{ width: 180, height: 120, left: 16, bottom: 16, right: 'auto', top: 'auto' }}
         />
-        <Panel position="bottom-right">
-          <button
-            onClick={chat.openDialog}
-            style={{ width: 120, height: 36, borderRadius: 8, border: '1px solid #e5e7eb',
-                     background:'#111827', color:'#fff', cursor:'pointer' }}
-          >
-            💬 Prompt
-          </button>
-        </Panel>
       </ReactFlow>
 
       {/* ✅ 展示型元件，從 Hook 拿 props */}
       <PromptDialog {...chat.dialogProps} />
+
+      {/* 固定在視窗右下角，不受 canvas 水平位置影響 */}
+      <button
+        onClick={chat.openDialog}
+        style={{
+          position: 'fixed',
+          bottom: 16,
+          right: 16,
+          width: 120,
+          height: 36,
+          borderRadius: 8,
+          border: '1px solid #e5e7eb',
+          background: '#111827',
+          color: '#fff',
+          cursor: 'pointer',
+          zIndex: 1000,
+        }}
+      >
+        💬 Prompt
+      </button>
     </div>
       </main>
     </div>
