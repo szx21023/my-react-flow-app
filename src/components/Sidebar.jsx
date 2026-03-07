@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 
 const defaultItems = [
+  { key: 'canvas', label: '🗺️ Canvas' },
   { key: 'specs', label: '📄 Specs' },
   { key: 'apis', label: '🔌 APIs' },
   { key: 'tables', label: '🗄️ Tables' },
@@ -8,7 +9,7 @@ const defaultItems = [
   { key: 'rag', label: '🧠 RAG' },
 ];
 
-export default function Sidebar({ items = defaultItems, onSelect }) {
+export default function Sidebar({ items = defaultItems, activePage, onSelect }) {
   const [collapsed, setCollapsed] = useState(false);
 
   return (
@@ -30,7 +31,7 @@ export default function Sidebar({ items = defaultItems, onSelect }) {
         {items.map((it) => (
           <button
             key={it.key}
-            className="sg-nav__item"
+            className={`sg-nav__item${activePage === it.key ? ' active' : ''}`}
             onClick={() => onSelect?.(it.key)}
             title={it.label}
           >
