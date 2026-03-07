@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import {
-  ReactFlow, Background, Controls, MiniMap, Panel,
+  ReactFlow, Background, Controls, MiniMap,
   useNodesState, useEdgesState,
 } from '@xyflow/react';
 import '@xyflow/react/dist/style.css';
