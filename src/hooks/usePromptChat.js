@@ -1,5 +1,12 @@
 import { useCallback, useEffect, useState, useMemo } from 'react';
 
+const normalizeMessage = (p) => ({
+  id: p.id,
+  role: p.role,
+  content: typeof p.prompt === 'string' ? { text: p.prompt } : p.content ?? { text: '' },
+  created_at: p.created_at,
+});
+
 export function usePromptChat({ base, onApplied, defaultMode = 'spec' } = {}) {
   const [open, setOpen] = useState(false);
   const [busy, setBusy] = useState(false);
@@ -9,13 +16,6 @@ export function usePromptChat({ base, onApplied, defaultMode = 'spec' } = {}) {
 
   // NEW: 規格/建議 模式
   const [mode, setMode] = useState(defaultMode); // 'spec' | 'advice'
-
-  const normalizeMessage = (p) => ({
-    id: p.id,
-    role: p.role,
-    content: typeof p.prompt === 'string' ? { text: p.prompt } : p.content ?? { text: '' },
-    created_at: p.created_at,
-  });
 
   const fetchHistory = useCallback(async () => {
     try {
