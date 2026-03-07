@@ -9,6 +9,7 @@ import ApiNode from './ApiNode';
 import { irToFlow } from './irToFlow';
 import PromptDialog from './components/PromptDialog';
 import Sidebar from './components/Sidebar';
+import SpecPage from './pages/SpecPage';
 import { usePromptChat } from './hooks/usePromptChat';
 
 const nodeTypes = { table: TableNode, api: ApiNode };
@@ -27,19 +28,31 @@ const apiFill = (m = '') => {
 };
 
 export default function App() {
+  const [page, setPage] = useState('canvas');
   const [nodes, setNodes, onNodesChange] = useNodesState([]);
   const [edges, setEdges, onEdgesChange] = useEdgesState([]);
+  const [loadError, setLoadError] = useState(null);
   const rfRef = useRef(null);
 
   const loadIR = async () => {
-    const ir = await fetch(`${API_BASE}/ir`).then(r => r.json());
+    setLoadError(null);
+    const res = await fetch(`${API_BASE}/ir`);
+    if (!res.ok) throw new Error(`HTTP ${res.status}`);
+    const ir = await res.json();
     const { nodes, edges } = irToFlow(ir);
     setNodes(nodes);
     setEdges(edges);
     setTimeout(() => rfRef.current?.fitView({ padding: 0.2 }), 0);
   };
 
-  useEffect(() => { loadIR().catch(console.error); }, []);
+  useEffect(() => {
+    if (page === 'canvas') {
+      loadIR().catch((err) => {
+        console.error('[loadIR]', err);
+        setLoadError(`無法載入資料：${err.message}`);
+      });
+    }
+  }, [page]);
 
   // ✅ 把對話窗邏輯全交給 Hook
   const chat = usePromptChat({
@@ -49,52 +62,65 @@ export default function App() {
 
   return (
     <div className="sg-app">
-      <Sidebar onSelect={(key)=>console.log('sidebar select:', key)} />
+      <Sidebar activePage={page} onSelect={setPage} />
       <main className="sg-main">
-        <div style={{ width: '100vw', height: '100vh' }}>
-      <ReactFlow
-        nodes={nodes}
-        edges={edges}
-        onNodesChange={onNodesChange}
-        onEdgesChange={onEdgesChange}
-        nodeTypes={nodeTypes}
-        fitView
-        onInit={(inst) => (rfRef.current = inst)}
-      >
-        <Background variant="dots" gap={16} size={1} />
-        <Controls showInteractive />
-        <MiniMap
-          zoomable
-          pannable
-          nodeColor={(n) => (n.type === 'api' ? apiFill(n.data?.method) : '#bfdbfe')}
-          nodeStrokeWidth={2}
-          style={{ width: 180, height: 120, left: 16, bottom: 16, right: 'auto', top: 'auto' }}
-        />
-      </ReactFlow>
+        {page === 'specs' ? (
+          <SpecPage />
+        ) : (
+          <div style={{ width: '100%', height: '100vh' }}>
+            {loadError && (
+              <div style={{
+                position: 'absolute', top: 16, left: '50%', transform: 'translateX(-50%)',
+                background: '#fef2f2', border: '1px solid #fca5a5', color: '#991b1b',
+                borderRadius: 8, padding: '8px 16px', zIndex: 10,
+              }}>
+                {loadError}
+              </div>
+            )}
+            <ReactFlow
+              nodes={nodes}
+              edges={edges}
+              onNodesChange={onNodesChange}
+              onEdgesChange={onEdgesChange}
+              nodeTypes={nodeTypes}
+              fitView
+              onInit={(inst) => (rfRef.current = inst)}
+            >
+              <Background variant="dots" gap={16} size={1} />
+              <Controls showInteractive />
+              <MiniMap
+                zoomable
+                pannable
+                nodeColor={(n) => (n.type === 'api' ? apiFill(n.data?.method) : '#bfdbfe')}
+                nodeStrokeWidth={2}
+                style={{ width: 180, height: 120, left: 16, bottom: 16, right: 'auto', top: 'auto' }}
+              />
+            </ReactFlow>
 
-      {/* ✅ 展示型元件，從 Hook 拿 props */}
-      <PromptDialog {...chat.dialogProps} />
+            {/* ✅ 展示型元件，從 Hook 拿 props */}
+            <PromptDialog {...chat.dialogProps} />
 
-      {/* 固定在視窗右下角，不受 canvas 水平位置影響 */}
-      <button
-        onClick={chat.openDialog}
-        style={{
-          position: 'fixed',
-          bottom: 16,
-          right: 16,
-          width: 120,
-          height: 36,
-          borderRadius: 8,
-          border: '1px solid #e5e7eb',
-          background: '#111827',
-          color: '#fff',
-          cursor: 'pointer',
-          zIndex: 1000,
-        }}
-      >
-        💬 Prompt
-      </button>
-    </div>
+            {/* 固定在視窗右下角，不受 canvas 水平位置影響 */}
+            <button
+              onClick={chat.openDialog}
+              style={{
+                position: 'fixed',
+                bottom: 16,
+                right: 16,
+                width: 120,
+                height: 36,
+                borderRadius: 8,
+                border: '1px solid #e5e7eb',
+                background: '#111827',
+                color: '#fff',
+                cursor: 'pointer',
+                zIndex: 1000,
+              }}
+            >
+              💬 Prompt
+            </button>
+          </div>
+        )}
       </main>
     </div>
   );

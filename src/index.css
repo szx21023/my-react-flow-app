@@ -24,9 +24,12 @@ a:hover {
 
 body {
   margin: 0;
-  display: flex;
-  place-items: center;
   min-width: 320px;
+  min-height: 100vh;
+}
+
+#root {
+  width: 100%;
   min-height: 100vh;
 }
 
@@ -68,7 +71,7 @@ button:focus-visible {
 }
 
 /* ===== SpecGenie App Shell ===== */
-.sg-app { display: flex; min-height: 100vh; }
+.sg-app { display: flex; width: 100%; min-height: 100vh; }
 .sg-main { flex: 1; position: relative; padding: 12px; }
 
 .sg-sidebar {
@@ -101,6 +104,7 @@ button:focus-visible {
   border-radius: 10px; padding: 10px 12px; cursor: pointer; text-align: left;
 }
 .sg-nav__item:hover { background: #1f2937; border-color: #374151; }
+.sg-nav__item.active { background: #1f2937; border-color: #4b5563; color: #fff; }
 
 .sg-nav__icon { width: 20px; display: inline-flex; justify-content: center; }
 .sg-sidebar.collapsed .sg-nav__text { display: none; }
